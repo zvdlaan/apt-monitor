@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Vandy Apt</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="/static/js/temps.js"></script>
+	</head>
+	<body>
+		<div class="overview">
+			<p id=current-temp></p>
+		</div>
+		<div class="tabs">
+			<ul class="tab-links">
+				<li class="active"><a href="#day">Day</a>
+				</li>
+				<li><a href="#week">Week</a>
+				</li>
+				<li><a href="#month">Month</a>
+				</li>
+				<li><a href="#all">All</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div id="day" class="tab active">
+					<div id="day-chart-div" style="width:700; height:500"></div>
+					<p id="day-min"></p>
+					<p id="day-max"></p>
+					<p id="day-mean"></p>
+					<p id="day-stddev"></p>	
+				</div>
+				<div id="week" class="tab">
+					<div id="week-chart-div" style="width:700; height:500"></div>
+					<p id="week-min"></p>
+					<p id="week-max"></p>
+					<p id="week-mean"></p>
+					<p id="week-stddev"></p>
+				</div>
+				<div id="month" class="tab">
+					<div id="month-chart-div" style="width:700; height:500"></div>
+					<p id="month-min"></p>
+					<p id="month-max"></p>
+					<p id="month-mean"></p>
+					<p id="month-stddev"></p>
+				</div>
+				<div id="all" class="tab">
+					<div id="all-chart-div" style="width:700; height:500"></div>
+					<p id="all-min"></p>
+					<p id="all-max"></p>
+					<p id="all-mean"></p>
+					<p id="all-stddev"></p>
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>

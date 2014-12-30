@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+
+"""This module contains the main handler of the application.
+"""
+
+import web
+import json
+import collections
+import models.temp_model
+
+render = web.template.render('views', base='base' )
+
+
+class IndexHandler(object):
+	def GET(self):
+		web.seeother('/temps')
+
+
+class TempsHandler(object):		
+	def GET(self):
+		temps = models.temp_model.get_temps_all()
+		return render.tempList(temps)
+
+class TempDataHandler(object):
+	def GET(self):
+		web.header('Content-Type', 'application/json')
+		params = web.input( time_period='all' )		
+		
+'''		if params.time_period == 'day':
+			tempData = models.temp_model.get_temps_day()
+		elif params.time_period == 'week':
+			tempData = models.temp_model.get_temps_week()
+		elif params.time_period == 'month':
+			tempData = models.temp_model.get_temps_month()
+		elif params.time_period == 'all':
+			tempData = models.temp_model.get_temps_all()	
+		
+		tempData_list = []
+		for item in tempData
+			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Temp',float(item.Temp) ) ] ) )
+		
+		tempData_dict = {'results': tempData_list}
+			
+		return json.dumps( tempData_dict, indent=4 )
+  '''
+		return 'hello'
+    
+    
