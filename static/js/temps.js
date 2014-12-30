@@ -12,6 +12,7 @@ jQuery(document).ready(function () {
 	 };	 
 	 updateCurrentTemp();	 
 	 
+	 
 	 var tempDataBaseURL = "http://localhost/tempData";		 
 	 jQuery('.tabs .tab-links a').on('click', function (e) {
 		
@@ -20,18 +21,15 @@ jQuery(document).ready(function () {
 		var idOfSelectedTab = jQuery('.tabs ' + currentAttrValue).attr('id') 				 
 	 
 		var tempDataFullURL = tempDataBaseURL + '?time_period=' + idOfSelectedTab;
-		
 		var items = [];					 
 		jQuery.getJSON(tempDataFullURL, function (data) {
 			 
 			 jQuery.each(data, function (key, val) {
 				 if (key == "results") {
 					 jQuery.each(val, function (index, value) {
-						 items.push( {c:[{v: new Date(value.Year, value.Month - 1, value.Day, 0, 30, 00) }, {v: value.Temp} ]} );					 
-						 // alert( "Id: " + value.Id + ", Time: " + value.Time + ", Temp: " + value.Temp ); 
+						items.push( {c:[{v: new Date(value.Timestamp * 1000) }, {v: value.Temp} ]} );					 		 
 					 });
-				 } 
-				 else {
+				 } else {
 					 if( val != null)
 					 {
 						document.getElementById(idOfSelectedTab + "-" + key).innerHTML =key + ":\t\t" + val;
@@ -50,39 +48,33 @@ jQuery(document).ready(function () {
 		// Change/remove current tab to active
 		jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
 
-		e.preventDefault();
-		
+		e.preventDefault();		
 		
 		function drawChart() {
 		// Create the data table.
-			
-			var myRows = [{c:[{v: new Date(2014, 2, 28, 0, 30, 00) },
-						   {v: 74.2}
-					  ]},
-					   {c:[{v: new Date(2014, 2, 28, 1, 30, 00) },
-						   {v: 80.1}
-					  ]},
-					   {c:[{v: new Date(2014, 2, 28, 2, 30, 00) },
-						   {v: 76.0}
-					  ]}
-				]		
-			
+		
 			var mydataObject = 
 			{
 				cols: [{id: 'date', label: 'Time', type: 'datetime'},
-						   {id: 'temp', label: 'Indoor Temp', type: 'number'}
+					{id: 'temp', label: 'Indoor Temp', type: 'number'}
 				],
-				rows: items	 // eventually put items
+				rows: items	
 			}
 			
 			var data = new google.visualization.DataTable( mydataObject );
+			data.sort(0);
+
+			var now = new Date();
+			var today = new Date( now.getFullYear(), now.getMonth(), now.getDate() );
+			var weekAgo = new Date( today.getFullYear(), today.getMonth(), today.getDate() - 7 );
+			var monthAgo =  new Date( today.getFullYear(), today.getMonth() - 1, today.getDate() ); 
 
 			// Set chart options
 			var options = {
 				'title': 'Temperature Monitoring',
 				'curveType': 'function',
-				'vAxis': {'title':'Temp (deg F)', 'minValue':65},
-				'hAxis': {'title':'Time', 'slantedTextAngle': 45, 'slantedText': true, },
+				'vAxis': {'title':'Temp (deg F)', 'minValue':60, 'maxValue':80 },
+				'hAxis': {'title':'Time', 'slantedTextAngle': 45, 'slantedText': true, 'viewWindowMode':'explicit', 'viewWindow': { 'max':now } },  // 'gridlines': {'count': 9}, 
 				'width': 700,
 				'height': 500
 			};

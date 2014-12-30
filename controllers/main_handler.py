@@ -41,7 +41,7 @@ class TempDataHandler(object):
 		tempData_list = []
 		
 		for item in tempData:		
-			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Temp',float(item.Temp) ) ] ) )
+			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('Temp',float(item.Temp) ) ] ) )
 		
 		if tempStats[0]['NumRowsInQuery'] == 0:
 			tempData_dict = {'results': tempData_list, 'min': tempStats[0]['Min'] , 'max': tempStats[0]['Max'], 'mean': tempStats[0]['Mean'], 'stddev': tempStats[0]['Stddev'] } 

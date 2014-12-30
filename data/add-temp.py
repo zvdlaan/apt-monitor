@@ -4,8 +4,8 @@ import random
 temp_f = random.randint(68, 77)
 
 db = MySQLdb.connect(host="localhost", # your host, usually localhost
-                     user="root", # your username
-                      passwd="root", # your password
+                     user="bone", # your username
+                      passwd="307541", # your password
                       db="DB_VandyApt") # name of the data base
 
 # you must create a Cursor object. It will let
