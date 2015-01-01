@@ -7,54 +7,70 @@ import web
 import json
 import collections
 import models.temp_model
+import subprocess
 
 render = web.template.render('views')
 
 
 class IndexHandler(object):
 	def GET(self):
-		web.seeother('/temps')
+		return 'Home page'
 
 
-class TempsHandler(object):		
+class TempsHandler(object):
 	def GET(self):
 		return render.base()
 
 class TempDataHandler(object):
 	def GET(self):
 		web.header('Content-Type', 'application/json')
-		params = web.input( time_period='all' )		
-		
+		params = web.input( time_period='all' )
+
 		if params.time_period == 'day':
 			tempData = models.temp_model.get_temps_day()
-			tempStats = list(models.temp_model.get_temps_day_stats())	
+			tempStats = list(models.temp_model.get_temps_day_stats())
 		elif params.time_period == 'week':
 			tempData = models.temp_model.get_temps_week()
-			tempStats = list(models.temp_model.get_temps_week_stats())	
+			tempStats = list(models.temp_model.get_temps_week_stats())
 		elif params.time_period == 'month':
 			tempData = models.temp_model.get_temps_month()
-			tempStats = list(models.temp_model.get_temps_month_stats())	
+			tempStats = list(models.temp_model.get_temps_month_stats())
 		elif params.time_period == 'all':
 			tempData = models.temp_model.get_temps_all()
-			tempStats = list(models.temp_model.get_temps_all_stats())	
-			
+			tempStats = list(models.temp_model.get_temps_all_stats())
+
 		tempData_list = []
-		
-		for item in tempData:		
+
+		for item in tempData:
 			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('Temp',float(item.Temp) ) ] ) )
-		
+
 		if tempStats[0]['NumRowsInQuery'] == 0:
-			tempData_dict = {'results': tempData_list, 'min': tempStats[0]['Min'] , 'max': tempStats[0]['Max'], 'mean': tempStats[0]['Mean'], 'stddev': tempStats[0]['Stddev'] } 
+			tempData_dict = {'results': tempData_list, 'min': tempStats[0]['Min'] , 'max': tempStats[0]['Max'], 'mean': tempStats[0]['Mean'], 'stddev': tempStats[0]['Stddev'] }
 		else:
-			tempData_dict = {'results': tempData_list, 'min': float(tempStats[0]['Min']) , 'max': float(tempStats[0]['Max']), 'mean': float(tempStats[0]['Mean']), 'stddev': float(tempStats[0]['Stddev']) } 
-	
-		return json.dumps( tempData_dict, indent=4 ) 
+			tempData_dict = {'results': tempData_list, 'min': float(tempStats[0]['Min']) , 'max': float(tempStats[0]['Max']), 'mean': float(tempStats[0]['Mean']), 'stddev': float(tempStats[0]['Stddev']) }
+
+		return json.dumps( tempData_dict, indent=4 )
 
 
-class CurrentTempHandler(object):		
+class CurrentTempHandler(object):
 	def GET(self):
 		web.header('Content-Type', 'application/json')
-		
+
 		tempData = {'temp': float(models.temp_model.get_current_temp()[0].Temp) }
-		
+
 		return json.dumps( tempData )
+
+
+class WebcamHandler(object):
+	def GET(self):
+		return render.webcam()
+	#	subprocess.call('/home/zvdlaan/mjpg-streamer/mjpg_streamer -i "/home/zvdlaan/mjpg-streamer/input_uvc.so -d /dev/video1 -n -f 15 -r 1280x960" -o "/home/zvdlaan/mjpg-streamer/output_http.so -n -p 8087 -c vandyapt:071915 -w ./www" ')
+	#	subprocess.call(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
+
+	#	subprocess.call(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
+
+		#subprocess.call('/home/zvdlaan/Desktop/start-webcam.sh')
+
+class BbControlHandler(object):
+	def GET(self):
+		return 'bbControl page'

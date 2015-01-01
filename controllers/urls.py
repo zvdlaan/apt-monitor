@@ -8,10 +8,14 @@ from main_handler import IndexHandler
 from main_handler import TempsHandler
 from main_handler import TempDataHandler
 from main_handler import CurrentTempHandler
+from main_handler import WebcamHandler
+from main_handler import BbControlHandler
 
 URLS = (
   '/', IndexHandler,
   '/temps', TempsHandler,
-  '/tempData', TempDataHandler,  
-  '/tempData/current', CurrentTempHandler
+  '/webcam', WebcamHandler,
+  '/tempData', TempDataHandler,
+  '/tempData/current', CurrentTempHandler,
+  '/bbcontrol', BbControlHandler
 )

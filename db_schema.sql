@@ -2,11 +2,12 @@
 --CREATE DATABASE DB_VandyApt;
 
 DROP TABLE IF EXISTS AmbientRoomTemp;
+DROP TABLE IF EXISTS InstantaneousAmbientRoomTemp;
 
 CREATE TABLE AmbientRoomTemp
 (
 	Id INT NOT NULL AUTO_INCREMENT,
-	MeasuredTime TIMESTAMP,
+	MeasuredTime DATETIME,
 	Temp DECIMAL(4,1),
 	PRIMARY KEY (Id)
 );
@@ -18,13 +19,15 @@ CREATE TABLE InstantaneousAmbientRoomTemp
 	PRIMARY KEY (Id)
 );
 
+INSERT INTO InstantaneousAmbientRoomTemp VALUES (1, 73.2);
+
 -- Day
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 00:00:00' , 74 );
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 01:00:00' , 75 );
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 02:00:00' , 76 );
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 03:00:00' , 76 );
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 04:00:00' , 76 );
-INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-29 05:00:00' , 76 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 00:00:00' , 74 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 01:00:00' , 75 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 02:00:00' , 76 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 03:00:00' , 76 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 04:00:00' , 76 );
+INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2014-12-31 05:00:00' , 76 );
 
 
 --Week
@@ -70,5 +73,3 @@ INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2013-12-10 04:00:00' ,
 INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( '2012-01-11 05:00:00' , 69);
 
 COMMIT;
-
-
