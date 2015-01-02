@@ -2,8 +2,61 @@
 <html>
 	<head>
 		<title>Webcam</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script>
+
+			function startWebcam()
+			{
+				var webcamOn = jQuery.post( "http://localhost/bbcontrol", { webcam: "start" }, function(data) {
+					if(data.webcam == "started")
+					{
+						setTimeout(function(){
+							document.getElementById('webcam-stream').src = "http://localhost:8087/?action=stream";
+							document.getElementById('webcam-stream').style.visibility = "visible";
+						}, 100);
+					}
+					else
+					{
+						document.getElementById('webcam-stream').src = "//:0";
+						document.getElementById('webcam-stream').style.visibility = "hidden";
+					}
+				}, 'json')
+				.fail(function() {
+					alert( "error starting webcam" );
+					document.getElementById('webcam-stream').src = "//:0";
+					document.getElementById('webcam-stream').style.visibility = "hidden";
+				});
+			}
+
+
+			function stopWebcam()
+			{
+				var webcamOff = jQuery.post( "http://localhost/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
+				.fail(function() {
+					alert( "error turning off the webcam" );
+				})
+				.always(function() {
+					document.getElementById('webcam-stream').src = "//:0";
+					document.getElementById('webcam-stream').style.visibility = "hidden";
+				});
+			}
+
+	  	jQuery(document).ready(function(){
+				document.getElementById('webcam-stream').style.visibility = "hidden";
+				jQuery('#start-webcam').click( startWebcam );
+				jQuery('#stop-webcam').click( stopWebcam );
+			});
+
+		//	jQuery(document).ready( stopWebcam );
+		  	window.onbeforeunload = stopWebcam;
+		</script>
 	</head>
 	<body>
-		<img alt="" src="http://localhost:8087/?action=stream" width="1280" height="960" />
+			<button id="start-webcam">Start</button>
+		 	<button id="stop-webcam">Stop</button>
+			<div>
+					<img id="webcam-stream" alt="" src="//:0" width="1080" height="600" />
+			</div>
 	</body>
 </html>

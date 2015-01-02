@@ -63,14 +63,30 @@ class CurrentTempHandler(object):
 
 class WebcamHandler(object):
 	def GET(self):
+		#process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
 		return render.webcam()
-	#	subprocess.call('/home/zvdlaan/mjpg-streamer/mjpg_streamer -i "/home/zvdlaan/mjpg-streamer/input_uvc.so -d /dev/video1 -n -f 15 -r 1280x960" -o "/home/zvdlaan/mjpg-streamer/output_http.so -n -p 8087 -c vandyapt:071915 -w ./www" ')
-	#	subprocess.call(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
-
-	#	subprocess.call(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
-
-		#subprocess.call('/home/zvdlaan/Desktop/start-webcam.sh')
 
 class BbControlHandler(object):
 	def GET(self):
 		return 'bbControl page'
+
+	def POST(self):
+		web.header('Content-Type', 'application/json')
+		data = web.input()
+		returnData = collections.OrderedDict()
+
+		if 'webcam' in data:
+			if data.webcam == "start":
+				process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
+				returnData['webcam'] = 'started'
+			elif data.webcam == "stop":
+				process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/stop-webcam.sh'])
+				process.communicate()
+				if process.returncode == 0:
+					returnData['webcam'] = 'stopped'
+				else:
+					returnData['webcam'] = 'error: webcam off command did not execute properly. The webcam may have already been off'
+			else:
+				returnData['webcam'] = 'error: webcam form-data value must be start or stop'
+
+		return json.dumps( returnData )
