@@ -77,10 +77,10 @@ class BbControlHandler(object):
 
 		if 'webcam' in data:
 			if data.webcam == "start":
-				process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
+				process = subprocess.Popen(['sudo','/home/vandy/scripts/start-webcam.sh'])
 				returnData['webcam'] = 'started'
 			elif data.webcam == "stop":
-				process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/stop-webcam.sh'])
+				process = subprocess.Popen(['sudo','/home/vandy/scripts/stop-webcam.sh'])
 				process.communicate()
 				if process.returncode == 0:
 					returnData['webcam'] = 'stopped'

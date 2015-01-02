@@ -8,13 +8,13 @@
 
 			function startWebcam()
 			{
-				var webcamOn = jQuery.post( "http://localhost/bbcontrol", { webcam: "start" }, function(data) {
+				var webcamOn = jQuery.post( "http://beaglebone-ubuntu.local/bbcontrol", { webcam: "start" }, function(data) {
 					if(data.webcam == "started")
 					{
 						setTimeout(function(){
-							document.getElementById('webcam-stream').src = "http://localhost:8087/?action=stream";
+							document.getElementById('webcam-stream').src = "http://beaglebone-ubuntu.local:8087/?action=stream";
 							document.getElementById('webcam-stream').style.visibility = "visible";
-						}, 100);
+						}, 500);
 					}
 					else
 					{
@@ -32,10 +32,7 @@
 
 			function stopWebcam()
 			{
-				var webcamOff = jQuery.post( "http://localhost/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
-				.fail(function() {
-					alert( "error turning off the webcam" );
-				})
+				var webcamOff = jQuery.post( "http://beaglebone-ubuntu.local/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
 				.always(function() {
 					document.getElementById('webcam-stream').src = "//:0";
 					document.getElementById('webcam-stream').style.visibility = "hidden";
