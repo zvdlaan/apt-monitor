@@ -8,13 +8,13 @@
 
 			function startWebcam()
 			{
-				var webcamOn = jQuery.post( "http://beaglebone-ubuntu.local/bbcontrol", { webcam: "start" }, function(data) {
+				var webcamOn = jQuery.post( "http://localhost/bbcontrol", { webcam: "start" }, function(data) {
 					if(data.webcam == "started")
 					{
 						setTimeout(function(){
-							document.getElementById('webcam-stream').src = "http://beaglebone-ubuntu.local:8087/?action=stream";
+							document.getElementById('webcam-stream').src = "http://localhost:8087/?action=stream";
 							document.getElementById('webcam-stream').style.visibility = "visible";
-						}, 500);
+						}, 100);
 					}
 					else
 					{
@@ -32,25 +32,20 @@
 
 			function stopWebcam()
 			{
-				var webcamOff = jQuery.post( "http://beaglebone-ubuntu.local/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
+				var webcamOff = jQuery.post( "http:///bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
+				.fail(function() {
+					alert( "error turning off the webcam" );
+				})
 				.always(function() {
 					document.getElementById('webcam-stream').src = "//:0";
 					document.getElementById('webcam-stream').style.visibility = "hidden";
 				});
 			}
 
-			function takePhoto()
-			{
-				var a = jQuery("<a>").attr("href", "http://beaglebone-ubuntu.local:8087/?action=snapshot").attr("download","img1.png").appendTo("body");
-				a[0].click();
-				a.remove();
-			}
-
 	  	jQuery(document).ready(function(){
 				document.getElementById('webcam-stream').style.visibility = "hidden";
 				jQuery('#start-webcam').click( startWebcam );
 				jQuery('#stop-webcam').click( stopWebcam );
-				jQuery('#take-photo').click( takePhoto );
 			});
 
 		//	jQuery(document).ready( stopWebcam );
@@ -60,7 +55,6 @@
 	<body>
 			<button id="start-webcam">Start</button>
 		 	<button id="stop-webcam">Stop</button>
-			<button id="take-photo">Take Photo</button>
 			<div>
 					<img id="webcam-stream" alt="" src="//:0" width="1080" height="600" />
 			</div>
