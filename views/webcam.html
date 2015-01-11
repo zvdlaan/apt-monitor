@@ -4,6 +4,8 @@
 		<title>Webcam</title>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 		<script>
 
 			function startWebcam()
@@ -51,6 +53,17 @@
 				jQuery('#start-webcam').click( startWebcam );
 				jQuery('#stop-webcam').click( stopWebcam );
 				jQuery('#take-photo').click( takePhoto );
+				
+				jQuery("#slider").slider(
+				{
+						value:90,
+						min: 0,
+						max: 180,
+						step: 1
+					//	slide: function( event, ui ) {
+					//		$( "#slider-value" ).html( ui.value );
+					//	}
+				});		
 			});
 
 		//	jQuery(document).ready( stopWebcam );
@@ -61,6 +74,7 @@
 			<button id="start-webcam">Start</button>
 		 	<button id="stop-webcam">Stop</button>
 			<button id="take-photo">Take Photo</button>
+			<div id="slider"></div>
 			<div>
 					<img id="webcam-stream" alt="" src="//:0" width="1080" height="600" />
 			</div>
