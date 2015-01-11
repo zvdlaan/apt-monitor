@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-	 var tempDataBaseURL = "http://localhost/tempData";
+	 var tempDataBaseURL = "http://beagle.local/tempData";
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
@@ -12,8 +12,6 @@ jQuery(document).ready(function () {
 	 };
 	 updateCurrentTemp();
 
-
-	 var tempDataBaseURL = "http://localhost/tempData";
 	 jQuery('.tabs .tab-links a').on('click', function (e) {
 
 		var currentAttrValue = jQuery(this).attr('href');
