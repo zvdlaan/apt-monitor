@@ -47,11 +47,35 @@
 				a[0].click();
 				a.remove();
 			}
+			
+			
+			function webcamOffUI()
+			{
+				jQuery('#start-webcam').prop('disabled', false);
+				jQuery('#stop-webcam').prop('disabled', true);
+				jQuery('#take-picture').prop('disabled', true);
+				jQuery('#slider').slider( 'option', 'disabled', true );	
+			}
+			
+			function webcamRunningUI()
+			{
+				jQuery('#start-webcam').prop('disabled', true);
+				jQuery('#stop-webcam').prop('disabled', false);
+				jQuery('#take-picture').prop('disabled', false);
+				jQuery('#slider').slider( 'option', 'disabled', false );				
+			}			
 
 	  	jQuery(document).ready(function(){
 				document.getElementById('webcam-stream').style.visibility = "hidden";
-				jQuery('#start-webcam').click( startWebcam );
-				jQuery('#stop-webcam').click( stopWebcam );
+				
+				jQuery("#start-webcam").click( function() {
+					startWebcam();
+					webcamRunningUI();
+				});	
+				jQuery("#stop-webcam").click( function() {
+					startWebcam();
+					webcamOffUI();
+				});				
 				jQuery('#take-photo').click( takePhoto );
 				
 				jQuery("#slider").slider(
