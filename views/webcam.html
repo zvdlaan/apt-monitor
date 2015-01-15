@@ -66,6 +66,17 @@
 			}			
 
 	  	jQuery(document).ready(function(){
+				jQuery("#slider").slider(
+				{
+						value:90,
+						min: 0,
+						max: 180,
+						step: 1
+					//	slide: function( event, ui ) {
+					//		$( "#slider-value" ).html( ui.value );
+					//	}
+				});	
+				webcamOffUI();
 				document.getElementById('webcam-stream').style.visibility = "hidden";
 				
 				jQuery("#start-webcam").click( function() {
@@ -78,16 +89,7 @@
 				});				
 				jQuery('#take-photo').click( takePhoto );
 				
-				jQuery("#slider").slider(
-				{
-						value:90,
-						min: 0,
-						max: 180,
-						step: 1
-					//	slide: function( event, ui ) {
-					//		$( "#slider-value" ).html( ui.value );
-					//	}
-				});		
+					
 			});
 
 		//	jQuery(document).ready( stopWebcam );
