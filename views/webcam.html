@@ -2,10 +2,12 @@
 <html>
 	<head>
 		<title>Webcam</title>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="/static/css/default.css">	
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+                <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+                <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400">
 		<script>
 
 			function startWebcam()
@@ -97,12 +99,48 @@
 		</script>
 	</head>
 	<body>
-			<button id="start-webcam">Start</button>
-		 	<button id="stop-webcam">Stop</button>
-			<button id="take-picture">Take Photo</button>
-			<div id="slider"></div>
-			<div>
-					<img id="webcam-stream" alt="" src="//:0" width="1080" height="600" />
-			</div>
-	</body>
+    
+    <header class="container group">
+
+      <h1 class="logo">
+        <a href="index.html">Vandy Apartment</a>
+      </h1>
+
+       <nav class="nav primary-nav">
+        <a href="index.html">Home</a>
+        <a href="temps.html">Temps</a>
+        <a href="webcam.html">Webcam</a>
+      </nav>
+
+    </header>
+    
+    <section class="container center">
+			
+		<div class="center vertRoom">	
+			<button id="start-webcam" class="btn btn-alt" >Start</a>
+			<button id="stop-webcam" class="btn btn-alt" >Stop</a>
+			<button id="take-picture" class ="btn btn-alt">Take Picture</button>
+		</div>		
+		
+		<div id="slider" class="vertRoom"></div>
+		
+	 </section>
+	
+	<section class="container">
+		<img id="webcam-feed" src="" alt="" width="900" height="500" >	
+	</section>	
+    
+	<!--<footer class="primary-footer container group">
+
+	  <small>&copy; Vandy Apt</small>
+
+	  <nav class="nav">
+		<a href="index.html">Home</a>
+		<a href="temps.html">Temps</a>
+		<a href="webcam.html">Webcam</a>
+	  </nav>
+
+	</footer> !-->
+    
+  </body>
 </html>
