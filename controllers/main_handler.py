@@ -14,12 +14,12 @@ render = web.template.render('views')
 
 class IndexHandler(object):
 	def GET(self):
-		return 'Home page'
+		return render.index()
 
 
 class TempsHandler(object):
 	def GET(self):
-		return render.base()
+		return render.temps()
 
 class TempDataHandler(object):
 	def GET(self):
