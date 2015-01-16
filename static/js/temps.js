@@ -4,7 +4,7 @@ jQuery(document).ready(function () {
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
-			 document.getElementById('current-temp').innerHTML = 'Current Temp: ' + String(data.temp);
+			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String(data.temp) + '&#176;F</strong>';
 		})
 		.fail(function () {
 			alert("error");
