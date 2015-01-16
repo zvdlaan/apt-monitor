@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+
 	 var tempDataBaseURL = "http://beagle.local/tempData";
 
 	 var updateCurrentTemp = function () {
@@ -10,17 +11,14 @@ jQuery(document).ready(function () {
 		});
 		setTimeout(updateCurrentTemp, 1000);
 	 };
-	 updateCurrentTemp();
-
-	 jQuery('.tabs .tab-links a').on('click', function (e) {
-
-		var currentAttrValue = jQuery(this).attr('href');
-
-		var idOfSelectedTab = jQuery('.tabs ' + currentAttrValue).attr('id')
-
-		var tempDataFullURL = tempDataBaseURL + '?time_period=' + idOfSelectedTab;
+	
+	function getData( timeOfDay ) {	
+			
+		var tempDataFullURL = tempDataBaseURL + '?time_period=' + timeOfDay;
 		var items = [];
 		jQuery.getJSON(tempDataFullURL, function (data) {
+
+	
 
 			 jQuery.each(data, function (key, val) {
 				 if (key == "results") {
@@ -30,7 +28,11 @@ jQuery(document).ready(function () {
 				 } else {
 					 if( val != null)
 					 {
-						document.getElementById(idOfSelectedTab + "-" + key).innerHTML =key + ":\t\t" + val;
+						document.getElementById(key + "-inside").innerHTML = val;
+					 }
+					 else
+					 {
+						 document.getElementById(key + "-inside").innerHTML = "";
 					 }
 				 }
 			 });
@@ -39,16 +41,8 @@ jQuery(document).ready(function () {
 			 .fail(function () {
 			  alert("error");
 		 });
-
-		// Show/Hide Tabs
-		jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-
-		// Change/remove current tab to active
-		jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-
-		e.preventDefault();
-
-		function drawChart() {
+		 
+		 function drawChart() {
 		// Create the data table.
 
 			var mydataObject =
@@ -73,13 +67,50 @@ jQuery(document).ready(function () {
 				'curveType': 'function',
 				'vAxis': {'title':'Temp (deg F)', 'minValue':60, 'maxValue':80 },
 				'hAxis': {'title':'Time', 'slantedTextAngle': 45, 'slantedText': true, 'viewWindowMode':'explicit', 'viewWindow': { 'max':now } },  // 'gridlines': {'count': 9},
-				'width': 700,
-				'height': 500
+				'width': 550,
+				'height': 300
 			};
 
 			// Instantiate and draw our chart, passing in some options.
-			var chart = new google.visualization.LineChart(document.getElementById(idOfSelectedTab + '-chart-div'));
+			var chart = new google.visualization.LineChart(document.getElementById('chart'));
 			chart.draw(data, options);
-		}
+		}	 
+		 			
+	}
+	
+	function clearAllButtons() {
+		jQuery('#day').css("background-color", "#D3D3D3");
+		jQuery('#week').css("background-color", "#D3D3D3");
+		jQuery('#month').css("background-color", "#D3D3D3");
+		jQuery('#all').css("background-color", "#D3D3D3");
+	}
+	
+	//initialize 
+	clearAllButtons();
+	updateCurrentTemp();	 
+	getData('day');
+	
+	jQuery('#day').click( function() {
+		clearAllButtons();
+		jQuery('#day').css("background-color", "#708D70");
+		getData('day')
+	});
+	
+	jQuery('#week').click( function() {
+		clearAllButtons();
+		jQuery('#week').css("background-color", "#708D70");
+		getData('week')
+	});
+	
+	jQuery('#month').click( function() {
+		clearAllButtons();
+		jQuery('#month').css("background-color", "#708D70");
+		getData('month')
+	});
+	
+	jQuery('#all').click( function() {
+		clearAllButtons();
+		jQuery('#all').css("background-color", "#708D70");
+		getData('all')
 	});
 });
