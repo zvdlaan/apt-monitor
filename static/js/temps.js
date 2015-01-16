@@ -1,14 +1,25 @@
 jQuery(document).ready(function () {
 
 	 var tempDataBaseURL = "http://beagle.local/tempData";
+	 var weatherQuery = 'http://api.openweathermap.org/data/2.5/weather?q=holland&units=imperial';
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
-			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String(data.temp) + '&#176;F</strong>';
+			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String( (data.temp).toFixed(1) ) + '&#176;F</strong>';
 		})
 		.fail(function () {
-			alert("error");
+			document.getElementById('current-inside-temp').innerHTML = 'N/A'
 		});
+	
+		jQuery.getJSON(weatherQuery, function (data) {
+			 document.getElementById('current-outside-temp').innerHTML = 'Holland: <strong>' + String((data.main.temp).toFixed(1)) + '&#176;F</strong> (' + String(data.weather[0].description) + ')';
+		})
+		.fail(function () {
+			document.getElementById('current-outside-temp').innerHTML = 'N/A'
+		});
+		
+		
+		
 		setTimeout(updateCurrentTemp, 1000);
 	 };
 	
