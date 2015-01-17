@@ -22,8 +22,11 @@ while True:
 	temp_f = (temp_c * 9/5) + 32
 	cur.execute("UPDATE InstantaneousAmbientRoomTemp SET Temp=(%s) WHERE Id=1", temp_f )
 	db.commit()
-	time.sleep(1)	
+	time.sleep(2)	
 
 cur.close()
 db.close()
+
+
+
 
