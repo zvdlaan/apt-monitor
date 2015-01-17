@@ -22,8 +22,8 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 		else:
 			turnOnPwmCommand = """sudo sh -c "echo 'am33xx_pwm' > """ + findSlotsLocation['output'] + """" """ 
 			turnOnPwm = RunCommand( turnOnPwmCommand )
-			if turnOnPwm['returncode'] != 1:
-				print "PWM ports could not be enabled.  " + turnOnPwmCommand + " command failed."
+			if turnOnPwm['returncode'] != 0:
+				print "PWM ports could not be enabled.  " + turnOnPwmCommand + " command failed." 
 			else:				
 				setupOutputPinCommand = """sudo sh -c "echo 'bone_pwm_""" + outputPin + """' > """ +  findSlotsLocation['output'] + """" """ 
 				setupOutputPin = RunCommand( setupOutputPinCommand )
