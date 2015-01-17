@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-import BBB_ADC as ADC
+import BBB_PWM as PWM
 
-ADC.Initialize()
-print ADC.GetValueRaw( 'P9-40' )
+PWM.InitializePin( 'P8_13' )
+
 
 
