@@ -1,5 +1,8 @@
 jQuery(document).ready(function () {
-
+	
+	jQuery.ajaxSetup({ timeout: 20000
+	});
+	
 	 var tempDataBaseURL = "http://beagle.local/tempData";
 	 var weatherQuery = 'http://api.openweathermap.org/data/2.5/weather?q=holland&units=imperial';
 
@@ -18,9 +21,7 @@ jQuery(document).ready(function () {
 			document.getElementById('current-outside-temp').innerHTML = 'N/A'
 		});
 		
-		
-		
-		setTimeout(updateCurrentTemp, 1000);
+		setTimeout(updateCurrentTemp, 10000);
 	 };
 	
 	function getData( timeOfDay ) {	
@@ -28,8 +29,6 @@ jQuery(document).ready(function () {
 		var tempDataFullURL = tempDataBaseURL + '?time_period=' + timeOfDay;
 		var items = [];
 		jQuery.getJSON(tempDataFullURL, function (data) {
-
-	
 
 			 jQuery.each(data, function (key, val) {
 				 if (key == "results") {
