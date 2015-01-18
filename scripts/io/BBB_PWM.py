@@ -31,23 +31,19 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					print "Pin " + outputpin + " could not be enabled. " + setupOutputPinCommand + " command failed."
 				else:
 					SetRun( outputPin, 0)
-					
-					if period is None:
+					"""if period is None:
 						SetPeriod(outputPin, 500000)
 					else:
 						SetPeriod(outputPin, period)
-						
 					if duty is None:
 						SetDuty(outputPin, 0)
 					else:
 						SetDuty(outputPin, duty)
-						
 					if polarity is None:
 						SetPolarity(outputPin, 1)
 					else:
-						SetPolarity(outputPin, polarity)					
-					
-					SetRun( outputPin, 1)					
+						SetPolarity(outputPin, polarity)"""
+					SetRun( outputPin, 1)				
 								
 					print "PWM driver and pin " + outputPin + " enabled"
 					
@@ -63,7 +59,7 @@ def SetRun( outputPin, value ):
 			changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
 			runChangeDir = RunCommand( changeDirCommand )
 			if runChangeDir['returncode'] != 1:
-				print 'Command: ' + runCommand + ' failed'
+				print 'Command: ' + changeDirCommand + ' failed'
 			else:				
 				runCommand = """sudo sh -c "echo '""" + str(value) + """' > /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """ 
 				run = RunCommand( runCommand )
@@ -77,12 +73,29 @@ def GetRun( outputPin ):
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
 	else:	
+		 changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
+                 runChangeDir = RunCommand( changeDirCommand )
+                 if runChangeDir['returncode'] != 1:
+                	 print 'Command: ' + changeDirCommand + ' failed'
+               	 else:
+			runValueCommand = """sudo cat /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """
+               		 runValue = RunCommand( runValueCommand )
+                if runValue['returncode'] != 1:
+                        print 'Command: ' + runValueCommand + ' failed'
+                else:
+                        print int( runValue['output'] )
+
+
+
+
+
+
 		runValueCommand = """sudo cat /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """ 
 		runValue = RunCommand( runValueCommand )
 		if runValue['returncode'] != 1:
-			return 'Command: ' + runValue + ' failed'
+			print 'Command: ' + runValueCommand + ' failed'
 		else:				
-			return int( runValue['output'] )
+			print int( runValue['output'] )
 
 
 
