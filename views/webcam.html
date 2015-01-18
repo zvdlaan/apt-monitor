@@ -9,65 +9,68 @@
                 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
                 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400">
 		<script>
-
-			function startWebcam()
-			{
-				var webcamOn = jQuery.post( "http://beagle.local/bbcontrol", { webcam: "start" }, function(data) {
-					if(data.webcam == "started")
-					{
-						setTimeout(function(){
-							document.getElementById('webcam-stream').src = "http://beagle.local:8087/?action=stream";
-							document.getElementById('webcam-stream').style.visibility = "visible";
-						}, 500);
-					}
-					else
-					{
+			jQuery(document).ready(function(){
+				jQuery.ajaxSetup({ timeout: 10000
+				});
+				function startWebcam()
+				{
+					var webcamOn = jQuery.post( "http://beagle.local/bbcontrol", { webcam: "start" }, function(data) {
+						if(data.webcam == "started")
+						{
+							setTimeout(function(){
+								document.getElementById('webcam-stream').src = "http://beagle.local:8087/?action=stream";
+								document.getElementById('webcam-stream').style.visibility = "visible";
+							}, 500);
+						}
+						else
+						{
+							document.getElementById('webcam-stream').src = "//:0";
+							document.getElementById('webcam-stream').style.visibility = "hidden";
+						}
+					}, 'json')
+					.fail(function() {
+						alert( "error starting webcam" );
 						document.getElementById('webcam-stream').src = "//:0";
 						document.getElementById('webcam-stream').style.visibility = "hidden";
-					}
-				}, 'json')
-				.fail(function() {
-					alert( "error starting webcam" );
-					document.getElementById('webcam-stream').src = "//:0";
-					document.getElementById('webcam-stream').style.visibility = "hidden";
-				});
-			}
-
-
-			function stopWebcam()
-			{
-				var webcamOff = jQuery.post( "http://beagle.local/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
-				.always(function() {
-					document.getElementById('webcam-stream').src = "//:0";
-					document.getElementById('webcam-stream').style.visibility = "hidden";
-				});
-			}
-
-			function takePhoto()
-			{
-				var a = jQuery("<a>").attr("href", "http://beagle.local:8087/?action=snapshot").attr("download","img1.png").appendTo("body");
-				a[0].click();
-				a.remove();
-			}
-			
-			
-			function webcamOffUI()
-			{
-				jQuery('#start-webcam').prop('disabled', false);
-				jQuery('#stop-webcam').prop('disabled', true);
-				jQuery('#take-picture').prop('disabled', true);
-				jQuery('#slider').slider( 'option', 'disabled', true );	
-			}
-			
-			function webcamRunningUI()
-			{
-				jQuery('#start-webcam').prop('disabled', true);
-				jQuery('#stop-webcam').prop('disabled', false);
-				jQuery('#take-picture').prop('disabled', false);
-				jQuery('#slider').slider( 'option', 'disabled', false );				
-			}			
-
-	  	jQuery(document).ready(function(){
+					});
+				}
+	
+	
+				function stopWebcam()
+				{
+					var webcamOff = jQuery.post( "http://beagle.local/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
+					.always(function() {
+						document.getElementById('webcam-stream').src = "//:0";
+						document.getElementById('webcam-stream').style.visibility = "hidden";
+					});
+				}
+	
+				function takePhoto()
+				{
+					var a = jQuery("<a>").attr("href", "http://beagle.local:8087/?action=snapshot").attr("download","img1.png").appendTo("body");
+					a[0].click();
+					a.remove();
+				}
+				
+				
+				function webcamOffUI()
+				{
+					jQuery('#start-webcam').prop('disabled', false);
+					jQuery('#stop-webcam').prop('disabled', true);
+					jQuery('#take-picture').prop('disabled', true);
+					jQuery('#slider').slider( 'option', 'disabled', true );	
+				}
+				
+				function webcamRunningUI()
+				{
+					jQuery('#start-webcam').prop('disabled', true);
+					jQuery('#stop-webcam').prop('disabled', false);
+					jQuery('#take-picture').prop('disabled', false);
+					jQuery('#slider').slider( 'option', 'disabled', false );				
+				}			
+				
+				
+				
 				jQuery("#slider").slider(
 				{
 						value:90,
