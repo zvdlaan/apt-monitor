@@ -1,5 +1,6 @@
 jQuery(document).ready(function () {
 	
+	// set timeout
 	jQuery.ajaxSetup({ timeout: 10000
 	});
 	
