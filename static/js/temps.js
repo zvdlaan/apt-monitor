@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
 	
-	jQuery.ajaxSetup({ timeout: 20000
+	jQuery.ajaxSetup({ timeout: 10000
 	});
 	
 	 var tempDataBaseURL = "http://beagle.local/tempData";
@@ -21,7 +21,7 @@ jQuery(document).ready(function () {
 			document.getElementById('current-outside-temp').innerHTML = 'N/A'
 		});
 		
-		setTimeout(updateCurrentTemp, 10000);
+		setTimeout(updateCurrentTemp, 30000);
 	 };
 	
 	function getData( timeOfDay ) {	
