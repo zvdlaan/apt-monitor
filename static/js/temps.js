@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
 	jQuery.ajaxSetup({ timeout: 10000
 	});
 	
-	 var tempDataBaseURL = "http://beagle.local/tempData";
+	 var tempDataBaseURL = "http://vandy.ydns.eu:8080/tempData";
 	 var weatherQuery = 'http://api.openweathermap.org/data/2.5/weather?q=holland&units=imperial';
 
 	 var updateCurrentTemp = function () {
