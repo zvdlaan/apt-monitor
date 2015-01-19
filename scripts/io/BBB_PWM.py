@@ -56,46 +56,46 @@ def SetRun( outputPin, value ):
 		if value not in [0,1]:
 			print 'run value must be 0 or 1'
 		else:	
-			changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
-			runChangeDir = RunCommand( changeDirCommand )
-			if runChangeDir['returncode'] != 1:
-				print 'Command: ' + changeDirCommand + ' failed'
-			else:				
-				runCommand = """sudo sh -c "echo '""" + str(value) + """' > /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """ 
+			findRunCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run"""
+                	findRun = RunCommand( findRunCmd )
+ 			if findRun['returncode'] != 0:
+                        	print 'Command: ' + findRunCmd + ' failed'
+                	else:				
+				runCommand = """sudo sh -c "echo '""" + str(value) + """' > """ + findRun['output'] + """" """
 				run = RunCommand( runCommand )
-				if run['returncode'] != 1:
+				if run['returncode'] != 0:
 					print 'Command: ' + runCommand + ' failed'
 				else:				
-					print '"run" set to ' + value
+					print '"run" set to ' + str(value)
+
+def GetValue( outputPin, operation ):
+	if outputPin not in acceptablePwmPins:
+                print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
+        else:
+		availableOperations = ['run', 'duty', 'period', 'frequency', 'polarity']
+		if type not in availableOperations:
+			print 'can only get values for ', '.join(availableOperations)
+		else:
 			
-				
+	return -1
+							
 def GetRun( outputPin ):	  
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
 	else:	
-		changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
-                runChangeDir = RunCommand( changeDirCommand )
-                if runChangeDir['returncode'] != 1:
-                	print 'Command: ' + changeDirCommand + ' failed'
-               	else:
-			runValueCommand = """sudo cat /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """
-               		runValue = RunCommand( runValueCommand )
-                	if runValue['returncode'] != 1:
+		findRunCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run"""
+                findRun = RunCommand( findRunCmd )
+       		if findRun['returncode'] != 0:
+                	print 'Command: ' + findRunCmd + ' failed' 
+            	else:
+			runValueCommand = """sudo cat """ + findRun['output']
+			runValue = RunCommand( runValueCommand )
+                      	if runValue['returncode'] != 0:
                         	print 'Command: ' + runValueCommand + ' failed'
                 	else:
-                        	print int( runValue['output'] )
-
-
-
-
-
-
-		runValueCommand = """sudo cat /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """ 
-		runValue = RunCommand( runValueCommand )
-		if runValue['returncode'] != 1:
-			print 'Command: ' + runValueCommand + ' failed'
-		else:				
-			print int( runValue['output'] )
+                        	return int( runValue['output'] )
+	return -1
+		
 
 
 
