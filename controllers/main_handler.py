@@ -56,7 +56,7 @@ class CurrentTempHandler(object):
 	def GET(self):
 		web.header('Content-Type', 'application/json')
 
-		tempData = {'inside-temp': float(models.temp_model.get_current_temp()[0].InsideTemp) }
+		tempData = {'inside-temp': float(models.temp_model.get_current_temp()[0]['InsideTemp']) }
 
 		return json.dumps( tempData )
 
