@@ -42,12 +42,12 @@ class TempDataHandler(object):
 		tempData_list = []
 
 		for item in tempData:
-			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('Temp',float(item.Temp) ) ] ) )
+			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('InsideTemp',float(item.InsideTemp) ) ] ) )
 
 		if tempStats[0]['NumRowsInQuery'] == 0:
-			tempData_dict = {'results': tempData_list, 'min': tempStats[0]['Min'] , 'max': tempStats[0]['Max'], 'mean': tempStats[0]['Mean'], 'stddev': tempStats[0]['Stddev'] }
+			tempData_dict = {'results': tempData_list, 'inside-min': tempStats[0]['InsideMin'] , 'inside-max': tempStats[0]['Max'], 'inside-mean': tempStats[0]['InsideMean'], 'inside-stddev': tempStats[0]['InsideStddev'] }
 		else:
-			tempData_dict = {'results': tempData_list, 'min': float(tempStats[0]['Min']) , 'max': float(tempStats[0]['Max']), 'mean': float(tempStats[0]['Mean']), 'stddev': float(tempStats[0]['Stddev']) }
+			tempData_dict = {'results': tempData_list, 'inside-min': float(tempStats[0]['InsideMin']) , 'inside-max': float(tempStats[0]['InsideMax']), 'inside-mean': float(tempStats[0]['InsideMean']), 'inside-stddev': float(tempStats[0]['InsideStddev']) }
 
 		return json.dumps( tempData_dict, indent=4 )
 
@@ -56,7 +56,7 @@ class CurrentTempHandler(object):
 	def GET(self):
 		web.header('Content-Type', 'application/json')
 
-		tempData = {'temp': float(models.temp_model.get_current_temp()[0].Temp) }
+		tempData = {'inside-temp': float(models.temp_model.get_current_temp()[0].InsideTemp) }
 
 		return json.dumps( tempData )
 
