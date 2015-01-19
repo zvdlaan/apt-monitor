@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
-			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String( (data.inside-temp).toFixed(1) ) + '&#176;F</strong>';
+			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String( (data['inside-temp']).toFixed(1) ) + '&#176;F</strong>';
 		})
 		.fail(function () {
 			document.getElementById('current-inside-temp').innerHTML = 'N/A'
@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
 			 jQuery.each(data, function (key, val) {
 				 if (key == "results") {
 					 jQuery.each(val, function (index, value) {
-						items.push( {c:[{v: new Date(value.Timestamp * 1000) }, {v: value.Temp} ]} );
+						items.push( {c:[{v: new Date(value.Timestamp * 1000) }, {v: value.InsideTemp} ]} );
 					 });
 				 } else {
 					 if( val != null)
