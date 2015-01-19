@@ -23,7 +23,7 @@ db = MySQLdb.connect(host="localhost", # your host, usually localhost
 cur = db.cursor()
 
 # Use all the SQL you like
-cur.execute("INSERT INTO AmbientRoomTemp (MeasuredTime, Temp) VALUES( NOW(), (%s) )", temp_f )
+cur.execute("INSERT INTO Temperature (MeasuredTime, InsideTemp) VALUES( NOW(), (%s) )", temp_f )
 
 db.commit()
 
