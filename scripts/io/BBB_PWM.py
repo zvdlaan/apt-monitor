@@ -46,27 +46,28 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					SetRun( outputPin, 1)				
 								
 					print "PWM driver and pin " + outputPin + " enabled"
+
 					
-			
-	
-def SetRun( outputPin, value ):	  
+def SetValue( outputPin, operation, value ):
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
 	else:
-		if value not in [0,1]:
-			print 'run value must be 0 or 1'
-		else:	
-			findRunCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run"""
-                	findRun = RunCommand( findRunCmd )
- 			if findRun['returncode'] != 0:
-                        	print 'Command: ' + findRunCmd + ' failed'
-                	else:				
-				runCommand = """sudo sh -c "echo '""" + str(value) + """' > """ + findRun['output'] + """" """
-				run = RunCommand( runCommand )
-				if run['returncode'] != 0:
-					print 'Command: ' + runCommand + ' failed'
-				else:				
-					print '"run" set to ' + str(value)
+		findOperationCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/""" + operation
+        	findOperation = RunCommand( findOperationCmd )
+ 		if findOperation['returncode'] != 0:
+                	print 'Command: ' + findOperationCmd + ' failed'
+        	else:				
+			operationCommand = """sudo sh -c "echo '""" + str(value) + """' > """ + findOperation['output'] + """" """
+			operation = RunCommand( operationCommand )
+			if operation['returncode'] != 0:
+				print 'Command: ' + operationCommand + ' failed'
+			else:				
+				print operation + ' set to ' + str(value)
+		
+	
+def SetRun( outputPin, value ):	  
+	SetValue( outputPin, 'run', value)
+			
 
 def GetValue( outputPin, operation ):
 	if outputPin not in acceptablePwmPins:
