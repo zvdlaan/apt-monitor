@@ -12,6 +12,14 @@ def RunCommand( command ):
 	returnDict = { 'returncode': process.returncode, 'output':response[0].rstrip(), 'error': response[1].rstrip() }
 	return returnDict
 
+def GetHzFromNanoSeconds( nanoSeconds ):
+	frequency = float( 1000000000 / nanoSeconds )
+	return int(frequency)
+
+def GetNanoSecondsFromHz( hz ):
+	period = float( 1000000000 / hz )
+	return int(period)
+
 def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
@@ -31,7 +39,7 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					print "Pin " + outputpin + " could not be enabled. " + setupOutputPinCommand + " command failed."
 				else:
 					SetRun( outputPin, 0)
-					"""if period is None:
+					if period is None:
 						SetPeriod(outputPin, 500000)
 					else:
 						SetPeriod(outputPin, period)
@@ -42,7 +50,7 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					if polarity is None:
 						SetPolarity(outputPin, 1)
 					else:
-						SetPolarity(outputPin, polarity)"""
+						SetPolarity(outputPin, polarity)
 					SetRun( outputPin, 1)				
 								
 					print "PWM driver and pin " + outputPin + " enabled"
@@ -58,8 +66,8 @@ def SetValue( outputPin, operation, value ):
                 	print 'Command: ' + findOperationCmd + ' failed'
         	else:				
 			operationCommand = """sudo sh -c "echo '""" + str(value) + """' > """ + findOperation['output'] + """" """
-			operation = RunCommand( operationCommand )
-			if operation['returncode'] != 0:
+			operationResponse = RunCommand( operationCommand )
+			if operationResponse['returncode'] != 0:
 				print 'Command: ' + operationCommand + ' failed'
 			else:				
 				print operation + ' set to ' + str(value)
@@ -68,6 +76,19 @@ def SetValue( outputPin, operation, value ):
 def SetRun( outputPin, value ):	  
 	SetValue( outputPin, 'run', value)
 			
+def SetPeriod( outputPin, value ):
+        SetValue( outputPin, 'period', value)
+
+def SetFrequency( outputPin, value ):
+	periodValue = GetNanoSecondsFromHz( value )
+        SetValue( outputPin, 'period', periodValue )
+
+def SetDuty( outputPin, value ):
+        SetValue( outputPin, 'duty', value)
+
+def SetPolarity( outputPin, value ):
+	SetValue( outputPin, 'polarity', value)
+
 
 def GetValue( outputPin, operation ):
 	if outputPin not in acceptablePwmPins:
@@ -93,9 +114,11 @@ def GetValue( outputPin, operation ):
 def GetRun( outputPin ):	  
 	return GetValue( outputPin, 'run')
 
-
 def GetPeriod( outputPin ):
 	return GetValue( outputPin, 'period')
+
+def GetFrequency( outputPin ):
+	return GetHzFromNanoSeconds( GetPeriod( outputPin) )
 
 def GetDuty( outputPin ):
 	return GetValue( outputPin, 'duty' )

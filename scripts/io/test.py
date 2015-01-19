@@ -3,10 +3,9 @@
 import BBB_PWM as PWM
 
 #PWM.InitializePin('P8_13')
-PWM.SetRun('P8_13', 0)
-print PWM.GetRun('P8_13')
-PWM.SetRun('P8_13', 1)
-print PWM.GetRun('P8_13')
-print PWM.GetPeriod('P8_13')
-print PWM.GetDuty('P8_13')
-print PWM.GetPolarity('P8_13')
+
+PWM.SetFrequency('P8_13', 60)
+print PWM.GetFrequency('P8_13')
+print "duty_min: " + str(float(.03*PWM.GetPeriod('P8_13')))+ "ns"
+print "duty_max: " + str(float(.145*PWM.GetPeriod('P8_13'))) + "ns"
+
