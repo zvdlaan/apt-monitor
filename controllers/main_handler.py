@@ -42,7 +42,7 @@ class TempDataHandler(object):
 		tempData_list = []
 
 		for item in tempData:
-			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('InsideTemp',float(item.InsideTemp) ) ] ) )
+			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('InsideTemp',float(item.InsideTemp) ), ('OutsideTemp',float(item.OutsideTemp) ] ) )
 		
 		
 		if tempStats[0]['NumRowsInQuery'] == 0:
