@@ -44,10 +44,10 @@ class TempDataHandler(object):
 		for item in tempData:
 			tempData_list.append( collections.OrderedDict( [ ('Id', item.Id), ('Month' , item.Month), ('Day', item.Day), ('Year', item.Year), ('Time', str(item.Time) ), ('Timestamp', item.Timestamp ), ('InsideTemp',float(item.InsideTemp) ) ] ) )
 
-		if tempStats[0]['NumRowsInQuery'] == 0:
+	#0	if tempStats[0]['NumRowsInQuery'] == 0:
 			tempData_dict = {'results': tempData_list, 'inside-min': tempStats[0]['InsideMin'] , 'inside-max': tempStats[0]['InsideMax'], 'inside-mean': tempStats[0]['InsideMean'], 'inside-stddev': tempStats[0]['InsideStddev'], 'outside-min': tempStats[0]['OutsideMin'] , 'outside-max': tempStats[0]['OutsideMax'], 'outside-mean': tempStats[0]['OutsideMean'], 'outside-stddev': tempStats[0]['OutsideStddev'] }
-		else:
-			tempData_dict = {'results': tempData_list, 'inside-min': float(tempStats[0]['InsideMin']) , 'inside-max': float(tempStats[0]['InsideMax']), 'inside-mean': float(tempStats[0]['InsideMean']), 'inside-stddev': float(tempStats[0]['InsideStddev']), 'outside-min': float(tempStats[0]['OutsideMin']) , 'outside-max': float(tempStats[0]['OutsideMax']), 'outside-mean': float(tempStats[0]['OutsideMean']), 'outside-stddev': float(tempStats[0]['OutsideStddev']) }
+	#	else:
+	#		tempData_dict = {'results': tempData_list, 'inside-min': float(tempStats[0]['InsideMin']) , 'inside-max': float(tempStats[0]['InsideMax']), 'inside-mean': float(tempStats[0]['InsideMean']), 'inside-stddev': float(tempStats[0]['InsideStddev']), 'outside-min': float(tempStats[0]['OutsideMin']) , 'outside-max': float(tempStats[0]['OutsideMax']), 'outside-mean': float(tempStats[0]['OutsideMean']), 'outside-stddev': float(tempStats[0]['OutsideStddev']) }
 
 		return json.dumps( tempData_dict, indent=4 )
 
