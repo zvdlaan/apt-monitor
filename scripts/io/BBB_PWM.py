@@ -73,17 +73,17 @@ def GetRun( outputPin ):
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
 	else:	
-		 changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
-                 runChangeDir = RunCommand( changeDirCommand )
-                 if runChangeDir['returncode'] != 1:
-                	 print 'Command: ' + changeDirCommand + ' failed'
-               	 else:
+		changeDirCommand = """cd /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*"""
+                runChangeDir = RunCommand( changeDirCommand )
+                if runChangeDir['returncode'] != 1:
+                	print 'Command: ' + changeDirCommand + ' failed'
+               	else:
 			runValueCommand = """sudo cat /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run" """
-               		 runValue = RunCommand( runValueCommand )
-                if runValue['returncode'] != 1:
-                        print 'Command: ' + runValueCommand + ' failed'
-                else:
-                        print int( runValue['output'] )
+               		runValue = RunCommand( runValueCommand )
+                	if runValue['returncode'] != 1:
+                        	print 'Command: ' + runValueCommand + ' failed'
+                	else:
+                        	print int( runValue['output'] )
 
 
 
