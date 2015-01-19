@@ -20,7 +20,7 @@ while True:
 	millivolts = ADC.GetValueMillivolts( 'P9-40' )
 	temp_c = (float(millivolts) - 500) / 10
 	temp_f = (temp_c * 9/5) + 32
-	cur.execute("UPDATE InstantaneousAmbientRoomTemp SET Temp=(%s) WHERE Id=1", temp_f )
+	cur.execute("UPDATE InstantaneousTemperature SET InsideTemp=(%s) WHERE Id=1", temp_f )
 	db.commit()
 	time.sleep(2)	
 
