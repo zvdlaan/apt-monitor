@@ -72,8 +72,8 @@ def GetValue( outputPin, operation ):
 	if outputPin not in acceptablePwmPins:
                 print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
         else:
-		if type not in availableOperations:
-			print 'can only get values for ', '.join(availableOperations)
+		if operation not in availableOperations:
+			print 'can only get values for ' + ', '.join(availableOperations)
 		else:
 			findOperationCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/""" + operation
 	                findOperation = RunCommand( findOperationCmd )
@@ -87,26 +87,17 @@ def GetValue( outputPin, operation ):
 	                	else:
 	                        	return int( operationValue['output'] )
 	return -1
-"""							
-def GetRun( outputPin ):	  
-	if outputPin not in acceptablePwmPins:
-		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
-	else:	
-		findRunCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/run"""
-                findRun = RunCommand( findRunCmd )
-       		if findRun['returncode'] != 0:
-                	print 'Command: ' + findRunCmd + ' failed' 
-            	else:
-			runValueCommand = """sudo cat """ + findRun['output']
-			runValue = RunCommand( runValueCommand )
-                      	if runValue['returncode'] != 0:
-                        	print 'Command: ' + runValueCommand + ' failed'
-                	else:
-                        	return int( runValue['output'] )
-	return -1
 
-"""		
+		
 def GetRun( outputPin ):	  
 	return GetValue( outputPin, 'run')
 
 
+def GetPeriod( outputPin ):
+	return GetValue( outputPin, 'period')
+
+def GetDuty( outputPin ):
+	return GetValue( outputPin, 'duty' )
+
+def GetPolarity( outputPin ):
+	return GetValue( outputPin, 'polarity')
