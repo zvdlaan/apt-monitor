@@ -4,7 +4,7 @@ import string
 
 
 acceptablePwmPins = ['P8_13', 'P8_19', 'P9_14', 'P9_16']
-
+availableOperations = ['run', 'duty', 'period', 'frequency', 'polarity']
 
 def RunCommand( command ):
 	process = subprocess.Popen( command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True )	
@@ -72,13 +72,22 @@ def GetValue( outputPin, operation ):
 	if outputPin not in acceptablePwmPins:
                 print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
         else:
-		availableOperations = ['run', 'duty', 'period', 'frequency', 'polarity']
 		if type not in availableOperations:
 			print 'can only get values for ', '.join(availableOperations)
 		else:
-			
+			findOperationCmd = """find /sys/devices/ocp.3/pwm_test_""" + outputPin + """.*/""" + operation
+	                findOperation = RunCommand( findOperationCmd )
+	       		if findOperation['returncode'] != 0:
+	                	print 'Command: ' + findOperationCmd + ' failed' 
+	            	else:
+				operationValueCommand = """sudo cat """ + findOperation['output']
+				operationValue = RunCommand( operationValueCommand )
+	                      	if operationValue['returncode'] != 0:
+	                        	print 'Command: ' + operationValueCommand + ' failed'
+	                	else:
+	                        	return int( operationValue['output'] )
 	return -1
-							
+"""							
 def GetRun( outputPin ):	  
 	if outputPin not in acceptablePwmPins:
 		print outputPin + ' is an invalid pwm pin. Acceptable pins are ' + ', '.join(acceptablePwmPins)
@@ -95,7 +104,9 @@ def GetRun( outputPin ):
                 	else:
                         	return int( runValue['output'] )
 	return -1
-		
 
+"""		
+def GetRun( outputPin ):	  
+	return GetValue( outputPin, 'run')
 
 
