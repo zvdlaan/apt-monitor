@@ -5,7 +5,7 @@ jQuery(document).ready(function () {
 	});
 	
 	 var tempDataBaseURL = "http://vandy.ydns.eu:8080/tempData";
-	 var weatherQuery = 'http://api.openweathermap.org/data/2.5/weather?q=holland&units=imperial';
+	 var weatherQuery = 'http://api.openweathermap.org/data/2.5/weather?q=holland,us&units=imperial';
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
