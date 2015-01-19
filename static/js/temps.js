@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
 
 	 var updateCurrentTemp = function () {
  	 	jQuery.getJSON(tempDataBaseURL + '/current', function (data) {
-			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String( (data.temp).toFixed(1) ) + '&#176;F</strong>';
+			 document.getElementById('current-inside-temp').innerHTML = 'Inside: <strong>' + String( (data.inside-temp).toFixed(1) ) + '&#176;F</strong>';
 		})
 		.fail(function () {
 			document.getElementById('current-inside-temp').innerHTML = 'N/A'
@@ -39,11 +39,11 @@ jQuery(document).ready(function () {
 				 } else {
 					 if( val != null)
 					 {
-						document.getElementById(key + "-inside").innerHTML = val;
+						document.getElementById(key).innerHTML = val;
 					 }
 					 else
 					 {
-						 document.getElementById(key + "-inside").innerHTML = "";
+						 document.getElementById(key).innerHTML = "";
 					 }
 				 }
 			 });
