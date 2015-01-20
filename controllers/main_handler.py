@@ -8,6 +8,7 @@ import json
 import collections
 import models.temp_model
 import subprocess
+import scripts.io.BBB_PWM as PWM
 
 render = web.template.render('views')
 
@@ -88,5 +89,17 @@ class BbControlHandler(object):
 					returnData['webcam'] = 'error: webcam off command did not execute properly. The webcam may have already been off'
 			else:
 				returnData['webcam'] = 'error: webcam form-data value must be start or stop'
+
+		if 'servo-angle' in data:
+			if 0 <= data['servo-angle'] < 180:
+				PWM.Initialize('P8_13')
+				PWM.SetFrequency('P8_13', 60)
+				duty_min = 0
+				duty_max = PWM.GetPeriod('P8_13')
+				duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
+				PWM.SetDuty(duty)
+				returnData['servo-angle'] = 'servo angle set to ' + data['servo-angle']
+			else:
+				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 
 		return json.dumps( returnData )
