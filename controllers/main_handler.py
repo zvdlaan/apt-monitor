@@ -101,7 +101,7 @@ class BbControlHandler(object):
 				#duty_max = PWM.GetPeriod('P8_13')
 				#duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
 				#PWM.SetDuty('P8_13', duty)
-				returnData['servo-angle'] = 'rc: ' + rc
+				returnData['servo-angle'] = 'rc: ' + str(rc)
 			else:
 				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 
