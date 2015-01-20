@@ -95,13 +95,13 @@ class BbControlHandler(object):
 
 		if 'servo-angle' in data:
 			if 0 <= int(data['servo-angle']) <= 180:
-				PWM.InitializePin('P8_13')
-				PWM.SetFrequency('P8_13', 60)
-				duty_min = 0
-				duty_max = PWM.GetPeriod('P8_13')
-				duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
-				PWM.SetDuty('P8_13', duty)
-				returnData['servo-angle'] = 'servo angle set to ' + data['servo-angle']
+				rc = PWM.InitializePin('P8_13')
+			#	PWM.SetFrequency('P8_13', 60)
+			#	duty_min = 0
+				#duty_max = PWM.GetPeriod('P8_13')
+				#duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
+				#PWM.SetDuty('P8_13', duty)
+				returnData['servo-angle'] = 'rc: ' + rc
 			else:
 				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 
