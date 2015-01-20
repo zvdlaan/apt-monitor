@@ -54,6 +54,9 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					SetRun( outputPin, 1)				
 								
 					print "PWM driver and pin " + outputPin + " enabled"
+					return 0
+	return 1
+	
 
 					
 def SetValue( outputPin, operation, value ):
