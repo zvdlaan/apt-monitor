@@ -95,7 +95,7 @@ class BbControlHandler(object):
 
 		if 'servo-angle' in data:
 			if 0 <= int(data['servo-angle']) <= 180:
-				PWM.Initialize('P8_13')
+				PWM.InitializePin('P8_13')
 				PWM.SetFrequency('P8_13', 60)
 				duty_min = 0
 				duty_max = PWM.GetPeriod('P8_13')
