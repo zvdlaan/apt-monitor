@@ -12,6 +12,9 @@ import subprocess
 import sys
 sys.path.insert(0, '/var/www/scripts/io')
 import BBB_PWM as PWM
+pwmPin = 'P8_13'
+rc = PWM.InitializePin(pwmPin)
+PWM.SetFrequency(pwmPin, 60)
 
 render = web.template.render('views')
 
@@ -67,7 +70,6 @@ class CurrentTempHandler(object):
 
 class WebcamHandler(object):
 	def GET(self):
-		#process = subprocess.Popen(['sudo','/home/zvdlaan/Desktop/start-webcam.sh'])
 		return render.webcam()
 
 class BbControlHandler(object):
@@ -95,7 +97,6 @@ class BbControlHandler(object):
 
 		if 'servo-angle' in data:
 			if 0 <= int(data['servo-angle']) <= 180:
-				rc = PWM.InitializePin('P8_13')
 			#	PWM.SetFrequency('P8_13', 60)
 			#	duty_min = 0
 				#duty_max = PWM.GetPeriod('P8_13')
