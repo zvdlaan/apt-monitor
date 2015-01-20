@@ -8,7 +8,10 @@ import json
 import collections
 import models.temp_model
 import subprocess
-import scripts.io.BBB_PWM as PWM
+
+import sys
+sys.path.insert(0, '/var/www/scripts/io')
+import BBB_PWM as PWM
 
 render = web.template.render('views')
 
