@@ -94,7 +94,7 @@ class BbControlHandler(object):
 				returnData['webcam'] = 'error: webcam form-data value must be start or stop'
 
 		if 'servo-angle' in data:
-			if 0 <= data['servo-angle'] < 180:
+			if 0 <= int(data['servo-angle']) <= 180:
 				PWM.Initialize('P8_13')
 				PWM.SetFrequency('P8_13', 60)
 				duty_min = 0
