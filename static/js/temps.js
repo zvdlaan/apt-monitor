@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
 			 jQuery.each(data, function (key, val) {
 				 if (key == "results") {
 					 jQuery.each(val, function (index, value) {
-						items.push( {c:[{v: new Date(value.Timestamp * 1000) }, {v: value.InsideTemp} ]} );
+						items.push( {c:[{v: new Date(value.Timestamp * 1000) }, {v: value.InsideTemp}, {v: value.OutsideTemp} ]} );
 					 });
 				 } else {
 					 if( val != null)
@@ -59,7 +59,8 @@ jQuery(document).ready(function () {
 			var mydataObject =
 			{
 				cols: [{id: 'date', label: 'Time', type: 'datetime'},
-					{id: 'temp', label: 'Indoor Temp', type: 'number'}
+					{id: 'temp', label: 'Indoor Temp', type: 'number'},
+					{id: 'temp', label: 'Outdoor Temp', type: 'number'}
 				],
 				rows: items
 			}
@@ -76,7 +77,7 @@ jQuery(document).ready(function () {
 			var options = {
 				'title': 'Temperature Monitoring',
 				'curveType': 'function',
-				'vAxis': {'title':'Temp (deg F)', 'minValue':60, 'maxValue':80 },
+				'vAxis': {'title':'Temp (deg F)' },
 				'hAxis': {'title':'Time', 'slantedTextAngle': 45, 'slantedText': true, 'viewWindowMode':'explicit', 'viewWindow': { 'max':now } },  // 'gridlines': {'count': 9},
 				'width': 550,
 				'height': 300
