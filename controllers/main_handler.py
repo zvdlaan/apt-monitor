@@ -16,6 +16,9 @@ pwmPin = 'P8_13'
 rc = PWM.InitializePin(pwmPin)
 PWM.SetFrequency(pwmPin, 60)
 
+
+import Beaglebone_PWM as MyPwm
+
 render = web.template.render('views')
 
 
@@ -98,11 +101,12 @@ class BbControlHandler(object):
 		if 'servo-angle' in data:
 			if 0 <= int(data['servo-angle']) <= 180:
 			#	PWM.SetFrequency('P8_13', 60)
+				reasoncode = MyPwm.InitializePin('P8_13')	
 			#	duty_min = 0
 				#duty_max = PWM.GetPeriod('P8_13')
 				#duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
 				#PWM.SetDuty('P8_13', duty)
-				returnData['servo-angle'] = 'rc: ' + str(rc)
+				returnData['servo-angle'] = 'reasoncode: ' + str(reasoncode)
 			else:
 				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 
