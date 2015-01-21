@@ -97,21 +97,27 @@ class BbControlHandler(object):
 				returnData['webcam'] = 'error: webcam form-data value must be start or stop'
 
 		if 'servo-angle' in data:
-			if !(0 <= int(data['servo-angle']) <= 180):
-				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
-			else:	
-				if rc_init != 0:
-					returnData['servo-angle'] = 'error: problem initializing PWM pin'
-				elif rc_setFrequency != 0: 
-					returnData['servo-angle'] = 'error: problem setting duty cycle'
-				else:
-					duty_min = 0
-					duty_max = PWM.GetPeriod('P8_13')
-					duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
-					rc_setDuty = PWM.SetDuty('P8_13', duty)
-					if rc_setDuty != 0:
-						returnData['servo-angle'] = 'error: problem setting duty cycle
+			try:
+				servoAngleInt = int(data['servo-angle'])
+				if servoAngleInt < 0 || servoAngleInt > 180:
+					returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
+				else:	
+					if rc_init != 0:
+						returnData['servo-angle'] = 'error: problem initializing PWM pin'
+					elif rc_setFrequency != 0: 
+						returnData['servo-angle'] = 'error: problem setting duty cycle'
 					else:
-						returnData['servo-angle'] = int(data['servo-angle'])
+						duty_min = 0
+						duty_max = PWM.GetPeriod('P8_13')
+						duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
+						rc_setDuty = PWM.SetDuty('P8_13', duty)
+						if rc_setDuty != 0:
+							returnData['servo-angle'] = 'error: problem setting duty cycle
+						else:
+							returnData['servo-angle'] = int(data['servo-angle'])	
+				
+			except TypeError:
+				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'
+			
 
 		return json.dumps( returnData )
