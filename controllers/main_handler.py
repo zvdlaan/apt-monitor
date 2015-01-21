@@ -116,7 +116,7 @@ class BbControlHandler(object):
 						else:
 							returnData['servo-angle'] = int(data['servo-angle'])	
 				
-			except TypeError:
+			except ValueError:
 				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'
 			
 
