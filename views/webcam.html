@@ -76,10 +76,12 @@
 						value:90,
 						min: 0,
 						max: 180,
-						step: 1
-					//	slide: function( event, ui ) {
-					//		$( "#slider-value" ).html( ui.value );
-					//	}
+						step: 1,
+						slide: function( event, ui ) {
+							var updateServo = jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { "servo-angle": ui.value }, function(data) {
+								alert( data['servo-angle']);
+							}, 'json');
+						}
 				});	
 				webcamOffUI();
 				document.getElementById('webcam-stream').style.visibility = "hidden";
