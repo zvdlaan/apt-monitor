@@ -100,10 +100,11 @@ class BbControlHandler(object):
 			if 0 <= int(data['servo-angle']) <= 180:
 				duty_min = 0
 				duty_max = PWM.GetPeriod('P8_13')
-				duty = (float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min
-				PWM.SetDuty('P8_13', duty)
-				actual_duty = PWM.GetDuty('P8_13')
-				returnData['servo-angle'] = 'specified duty: ' + str(duty ) + ' actual duty: ' +  str(actual_duty)
+				duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
+				rc_setDuty = PWM.SetDuty('P8_13', duty)
+				if rc_setDuty == 1:
+					returnData['servo-angle'] = int(data['servo-angle'])
+				returnData['servo-angle'] = '
 			else:
 				returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 
