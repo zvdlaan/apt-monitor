@@ -68,7 +68,7 @@ def SetValue( outputPin, operation, value ):
  		if findOperation['returncode'] != 0:
                 	print 'Command: ' + findOperationCmd + ' failed'
         	else:				
-			operationCommand = """sudo sh -c "echo '""" + str(value) + """' > """ + findOperation['output'] + """" """
+			operationCommand = """sudo sh -c "echo '""" + str(int(value)) + """' > """ + findOperation['output'] + """" """
 			operationResponse = RunCommand( operationCommand )
 			if operationResponse['returncode'] != 0:
 				print 'Command: ' + operationCommand + ' failed'
