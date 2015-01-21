@@ -112,7 +112,7 @@ class BbControlHandler(object):
 						duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
 						rc_setDuty = PWM.SetDuty('P8_13', duty)
 						if rc_setDuty != 0:
-							returnData['servo-angle'] = 'error: problem setting duty cycle
+							returnData['servo-angle'] = 'error: problem setting duty cycle'
 						else:
 							returnData['servo-angle'] = int(data['servo-angle'])	
 				
