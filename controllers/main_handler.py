@@ -99,7 +99,7 @@ class BbControlHandler(object):
 		if 'servo-angle' in data:
 			try:
 				servoAngleInt = int(data['servo-angle'])
-				if servoAngleInt < 0 || servoAngleInt > 180:
+				if servoAngleInt < 0 or servoAngleInt > 180:
 					returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
 				else:	
 					if rc_init != 0:
