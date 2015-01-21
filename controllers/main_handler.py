@@ -121,6 +121,7 @@ class BbControlHandler(object):
 						returnData['servo-angle'] = 'error: problem setting duty cycle'
 					else:
 						#duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
+						duty = dutyCycleLookup[servoAngleInt] 
 						rc_setDuty = PWM.SetDuty('P8_13', duty)
 						if rc_setDuty != 0:
 							returnData['servo-angle'] = 'error: problem setting duty cycle'
@@ -128,7 +129,7 @@ class BbControlHandler(object):
 							returnData['servo-angle'] = int(data['servo-angle'])	
 				
 			except ValueError:
-				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'"""
+				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'
 			
 
 		return json.dumps( returnData )
