@@ -9,6 +9,8 @@ import collections
 import models.temp_model
 import subprocess
 
+#--------------------
+# Initialize PWM pin and create lookup table for optimization
 import sys
 sys.path.insert(0, '/var/www/scripts/io')
 import BBB_PWM as PWM
@@ -16,6 +18,17 @@ import BBB_PWM as PWM
 pwmPin = 'P8_13'
 rc_init = PWM.InitializePin(pwmPin)
 rc_setFrequency = PWM.SetFrequency(pwmPin, 60)
+
+duty_min = 0
+duty_max = PWM.GetPeriod('P8_13')
+#duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
+
+dutyCycleLookup = {}
+for value in range(0, 181):
+	dutyCycleLookup[value] = int((float(value/180))*(duty_max-duty_min) + duty_min)	
+
+#---------------------------
+
 
 render = web.template.render('views')
 
@@ -107,9 +120,7 @@ class BbControlHandler(object):
 					elif rc_setFrequency != 0: 
 						returnData['servo-angle'] = 'error: problem setting duty cycle'
 					else:
-						duty_min = 0
-						duty_max = PWM.GetPeriod('P8_13')
-						duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
+						#duty = int((float(data['servo-angle'])/180)*(duty_max-duty_min) + duty_min)
 						rc_setDuty = PWM.SetDuty('P8_13', duty)
 						if rc_setDuty != 0:
 							returnData['servo-angle'] = 'error: problem setting duty cycle'
@@ -117,7 +128,7 @@ class BbControlHandler(object):
 							returnData['servo-angle'] = int(data['servo-angle'])	
 				
 			except ValueError:
-				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'
+				returnData['servo-angle'] = 'error: servo-angle value must be 0-180'"""
 			
 
 		return json.dumps( returnData )
