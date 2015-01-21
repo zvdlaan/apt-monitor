@@ -100,7 +100,7 @@ class BbControlHandler(object):
 			try:
 				servoAngleInt = int(data['servo-angle'])
 				if servoAngleInt < 0 or servoAngleInt > 180:
-					returnData['servo-angle'] = 'error: ' + data['servo-angle'] + ' is invalid servo angle' 
+					returnData['servo-angle'] = 'error: servo-angle value must be 0-180' 
 				else:	
 					if rc_init != 0:
 						returnData['servo-angle'] = 'error: problem initializing PWM pin'
