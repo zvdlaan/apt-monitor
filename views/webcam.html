@@ -69,18 +69,19 @@
 					jQuery('#slider').slider( 'option', 'disabled', false );				
 				}			
 				
-				
+				function updateServo()
+				{
+					jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { "servo-angle": ui.value }, function(data) {}, 'json');
+				}
 				
 				jQuery("#slider").slider(
 				{
 						value:90,
 						min: 0,
 						max: 180,
-						step: 1,
+						step: 5,
 						slide: function( event, ui ) {
-							var updateServo = jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { "servo-angle": ui.value }, function(data) {
-							
-							}, 'json');
+							updateServo();
 						}
 				});	
 				webcamOffUI();
