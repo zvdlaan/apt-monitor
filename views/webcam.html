@@ -79,7 +79,7 @@
 						step: 1,
 						slide: function( event, ui ) {
 							var updateServo = jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { "servo-angle": ui.value }, function(data) {
-								alert( data['servo-angle']);
+							
 							}, 'json');
 						}
 				});	
