@@ -55,7 +55,7 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 								
 					print "PWM driver and pin " + outputPin + " enabled"
 					return 0
-	return 1
+	return -1
 	
 
 					
@@ -74,23 +74,25 @@ def SetValue( outputPin, operation, value ):
 				print 'Command: ' + operationCommand + ' failed'
 			else:				
 				print operation + ' set to ' + str(value)
+				return 0
+	return -1
 		
 	
 def SetRun( outputPin, value ):	  
-	SetValue( outputPin, 'run', value)
+	return SetValue( outputPin, 'run', value)
 			
 def SetPeriod( outputPin, value ):
-        SetValue( outputPin, 'period', value)
+        return SetValue( outputPin, 'period', value)
 
 def SetFrequency( outputPin, value ):
 	periodValue = GetNanoSecondsFromHz( value )
-        SetValue( outputPin, 'period', periodValue )
+        return SetValue( outputPin, 'period', periodValue )
 
 def SetDuty( outputPin, value ):
-        SetValue( outputPin, 'duty', value)
+        return SetValue( outputPin, 'duty', value)
 
 def SetPolarity( outputPin, value ):
-	SetValue( outputPin, 'polarity', value)
+	return SetValue( outputPin, 'polarity', value)
 
 
 def GetValue( outputPin, operation ):
