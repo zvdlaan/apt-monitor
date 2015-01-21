@@ -48,7 +48,7 @@ def InitializePin( outputPin, period=None, duty=None, polarity=None ):
 					else:
 						SetDuty(outputPin, duty)
 					if polarity is None:
-						SetPolarity(outputPin, 1)
+						SetPolarity(outputPin, 0)
 					else:
 						SetPolarity(outputPin, polarity)
 					SetRun( outputPin, 1)				
