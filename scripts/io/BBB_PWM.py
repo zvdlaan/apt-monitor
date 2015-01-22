@@ -3,7 +3,10 @@ import subprocess
 import string
 
 
-acceptablePwmPins = ['P8_13', 'P9_14', 'P9_16']  #'P8_19' should work, but doesn't seem to
+acceptablePwmPins = ['P8_13']
+# 'P9_14', 'P9_16' partially work
+# 'P8_19'  doesnt work
+
 availableOperations = ['run', 'duty', 'period', 'frequency', 'polarity']
 
 def RunCommand( command ):
