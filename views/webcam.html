@@ -14,6 +14,7 @@
 				});
 				function startWebcam()
 				{
+					updateServo(90);
 					var webcamOn = jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { webcam: "start" }, function(data) {
 						if(data.webcam == "started")
 						{
@@ -38,6 +39,7 @@
 	
 				function stopWebcam()
 				{
+					updateServo(90);
 					var webcamOff = jQuery.post( "http://vandy.ydns.eu:8080/bbcontrol", { webcam: "stop"}, function(data) {}, 'json')
 					.always(function() {
 						document.getElementById('webcam-stream').src = "//:0";
@@ -86,7 +88,7 @@
 				});	
 				webcamOffUI();
 				document.getElementById('webcam-stream').style.visibility = "hidden";
-				updateServo(90);
+				
 				
 				jQuery("#start-webcam").click( function() {
 					startWebcam();
