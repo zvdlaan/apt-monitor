@@ -14,11 +14,6 @@ import subprocess
 import sys
 sys.path.insert(0, '/var/www/scripts/io')
 import BBB_PWM as PWM
-
-pwmPin = 'P8_13'
-rc_init = PWM.InitializePin(pwmPin)
-rc_setFrequency = PWM.SetFrequency(pwmPin, 60)
-
 #---------------------------
 
 
@@ -107,6 +102,9 @@ class BbControlHandler(object):
 				if servoAngleInt not in [0, 90, 180]:
 					returnData['servo-angle'] = 'error: servo-angle value must be 0-180' 
 				else:	
+					pwmPin = 'P8_13'
+					rc_init = PWM.InitializePin(pwmPin)
+					rc_setFrequency = PWM.SetFrequency(pwmPin, 60)
 					if rc_init != 0:
 						returnData['servo-angle'] = 'error: problem initializing PWM pin'
 					elif rc_setFrequency != 0: 
