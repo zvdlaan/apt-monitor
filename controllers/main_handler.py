@@ -112,12 +112,13 @@ class BbControlHandler(object):
 					elif rc_setFrequency != 0: 
 						returnData['servo-angle'] = 'error: problem setting duty cycle'
 					else:
+						# switched values of 0 and 180 to make 180 go clockwise
 						if servoAngleInt == 0:
-							duty = 560000
+							duty = 2380000
 						elif servoAngleInt == 90:
 							duty = 1420000
 						elif servoAngleInt == 180: 
-							duty = 2380000
+							duty = 560000
 						rc_setDuty = PWM.SetDuty('P8_13', duty)
 						if rc_setDuty != 0:
 							returnData['servo-angle'] = 'error: problem setting duty cycle'
