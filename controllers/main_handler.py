@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, '/var/www/scripts/io')
 import BBB_PWM as PWM
 
-pwmPin = 'P8_19'
+pwmPin = 'P8_13'
 rc_init = PWM.InitializePin(pwmPin)
 rc_setFrequency = PWM.SetFrequency(pwmPin, 60)
 
