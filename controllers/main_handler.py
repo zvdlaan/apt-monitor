@@ -12,7 +12,7 @@ import subprocess
 #--------------------
 # Initialize PWM pin
 import sys
-sys.path.insert(0, '/var/www/scripts/io')
+sys.path.insert(0, '/var/www/vandy-apt/scripts/io')
 import BBB_PWM as PWM
 #---------------------------
 
